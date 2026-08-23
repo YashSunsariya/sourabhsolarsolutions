@@ -74,10 +74,13 @@ function Contact() {
       `Message: ${data.message || '-'}`,
     ].join('\n')
 
-    // Opens WhatsApp with the enquiry pre-filled.
-    // TODO: Also POST this payload to your real enquiry endpoint, e.g.
-    // fetch('/api/enquiry', { method: 'POST', headers: {...}, body: JSON.stringify(data) })
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+    const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+
+    if (!whatsappWindow) {
+      window.location.assign(whatsappUrl)
+      return
+    }
 
     setSubmitted(true)
   }
@@ -168,7 +171,7 @@ function Contact() {
             <Reveal delay={120}>
               <div className="contact-form-wrap" id="contact-form">
                 {submitted ? (
-                  <div className="form-success">
+                  <div className="form-success" role="status" aria-live="polite">
                     <span className="form-success-icon">
                       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="M20 6 9 17l-5-5" />
@@ -181,7 +184,7 @@ function Contact() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} noValidate={false}>
                     <h3>Send an Enquiry</h3>
                     <p>Fill in the form and our team will respond within 24 hours.</p>
                     <Row className="g-3">
@@ -193,6 +196,7 @@ function Contact() {
                           type="text"
                           className="form-control-solar"
                           placeholder="Your name"
+                          autoComplete="name"
                           required
                         />
                       </Col>
@@ -206,6 +210,7 @@ function Contact() {
                           placeholder="+91 00000 00000"
                           pattern="[0-9+()\-\s]{10,15}"
                           title="Enter a valid phone number (10-15 digits)"
+                          autoComplete="tel"
                           required
                         />
                       </Col>
@@ -217,6 +222,7 @@ function Contact() {
                           type="email"
                           className="form-control-solar"
                           placeholder="you@example.com"
+                          autoComplete="email"
                         />
                       </Col>
                       <Col md={6}>

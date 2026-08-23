@@ -24,7 +24,7 @@ function NavBar() {
   return (
     <Navbar
       expand="lg"
-      className={`navbar-solar fixed-top ${scrolled ? 'navbar-scrolled' : ''}`}
+      className={`navbar-solar fixed-top ${scrolled ? 'navbar-scrolled' : ''} ${expanded ? 'navbar-expanded' : ''}`}
       expanded={expanded}
     >
       <Container>
