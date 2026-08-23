@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 
 const navLinks = [
@@ -13,10 +13,14 @@ const navLinks = [
 function NavBar() {
   const [scrolled, setScrolled] = useState(false)
   const [expanded, setExpanded] = useState(false)
+  const [activeHref, setActiveHref] = useState(navLinks[0].href)
+  const clickLockUntilRef = useRef(0)
 
   const handleNavigation = (event, href) => {
     event.preventDefault()
     setExpanded(false)
+    clickLockUntilRef.current = Date.now() + 900
+    setActiveHref(href)
 
     const target = document.querySelector(href)
     if (target) {
@@ -30,6 +34,52 @@ function NavBar() {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.querySelector(link.href))
+      .filter(Boolean)
+    if (sections.length === 0) return
+
+    const resolveActiveHref = () => {
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4
+      if (atBottom) {
+        return `#${sections[sections.length - 1].id}`
+      }
+      if (window.scrollY <= 4) {
+        return `#${sections[0].id}`
+      }
+      const probeLine = window.innerHeight * 0.35
+      let current = sections[0]
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= probeLine) {
+          current = section
+        }
+      }
+      return `#${current.id}`
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return
+        if (Date.now() < clickLockUntilRef.current) return
+        setActiveHref(resolveActiveHref())
+      },
+      { rootMargin: '-35% 0px -55% 0px', threshold: 0 }
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    setActiveHref(resolveActiveHref())
+
+    const onResize = () => setActiveHref(resolveActiveHref())
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', onResize)
+    }
   }, [])
 
   return (
@@ -67,6 +117,7 @@ function NavBar() {
               <Nav.Link
                 key={link.href}
                 href={link.href}
+                className={activeHref === link.href ? 'active' : ''}
                 onClick={(event) => handleNavigation(event, link.href)}
               >
                 {link.label}
