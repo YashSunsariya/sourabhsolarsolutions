@@ -4,6 +4,7 @@
 
 /* ---------- Navbar ---------- */
 .navbar-solar {
+  z-index: 1050;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -100,9 +101,36 @@
 }
 
 @media (max-width: 991.98px) {
-  .navbar-solar.navbar-expanded {
-    position: sticky;
+  .navbar-solar .navbar-brand,
+  .navbar-solar .navbar-toggler-solar {
+    position: relative;
+    z-index: 1052;
+  }
+
+  .navbar-solar .navbar-collapse {
+    position: fixed;
+    z-index: 1051;
     top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100dvh;
+    padding: 104px 24px 32px;
+    background: rgba(255, 255, 255, 0.98);
+    overflow-y: auto;
+    transform: translateX(100%);
+    visibility: hidden;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .navbar-solar .navbar-collapse.show {
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .navbar-solar .navbar-collapse .navbar-nav {
+    align-items: stretch !important;
   }
 
   .navbar-toggler-solar {
@@ -677,8 +705,13 @@
   box-shadow: var(--shadow-lg);
 }
 
+.gov-project-panel .row > [class*='col-'] {
+  display: flex;
+}
+
 .gov-media {
   position: relative;
+  width: 100%;
   height: 100%;
   min-height: 420px;
 }
@@ -688,6 +721,7 @@
   height: 100%;
   min-height: 420px;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -1019,7 +1053,7 @@
 .case-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 620px;
   background: #ffffff;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -2401,6 +2435,10 @@
 
   .case-card-media {
     height: 150px;
+  }
+
+  .case-card {
+    height: 468px;
   }
 
   .case-card-body {

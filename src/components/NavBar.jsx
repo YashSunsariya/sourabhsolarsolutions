@@ -14,6 +14,17 @@ function NavBar() {
   const [scrolled, setScrolled] = useState(false)
   const [expanded, setExpanded] = useState(false)
 
+  const handleNavigation = (event, href) => {
+    event.preventDefault()
+    setExpanded(false)
+
+    const target = document.querySelector(href)
+    if (target) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+      window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' })
+    }
+  }
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
@@ -28,7 +39,7 @@ function NavBar() {
       expanded={expanded}
     >
       <Container>
-        <Navbar.Brand href="#home" onClick={() => setExpanded(false)}>
+        <Navbar.Brand href="#home" onClick={(event) => handleNavigation(event, '#home')}>
           <span className="brand-mark">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="12" cy="12" r="4" fill="#f9a825" stroke="none" />
@@ -56,7 +67,7 @@ function NavBar() {
               <Nav.Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setExpanded(false)}
+                onClick={(event) => handleNavigation(event, link.href)}
               >
                 {link.label}
               </Nav.Link>
@@ -64,7 +75,7 @@ function NavBar() {
             <a
               href="#contact"
               className="nav-cta ms-lg-3"
-              onClick={() => setExpanded(false)}
+              onClick={(event) => handleNavigation(event, '#contact')}
             >
               Get a Quote
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
