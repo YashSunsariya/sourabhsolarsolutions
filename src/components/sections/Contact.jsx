@@ -179,8 +179,8 @@ function Contact() {
                     </span>
                     <h4>Thank You!</h4>
                     <p>
-                      Your enquiry has been received. Our team will contact you shortly
-                      to discuss your solar requirement.
+                      Your enquiry is ready in WhatsApp. Send the message to connect with
+                      our team about your solar requirement.
                     </p>
                   </div>
                 ) : (

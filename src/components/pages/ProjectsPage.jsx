@@ -67,7 +67,7 @@ const projects = [
   },
 ]
 
-function Projects() {
+function ProjectsPage() {
   const [active, setActive] = useState('All')
   const filtered = active === 'All' ? projects : projects.filter((p) => p.category === active)
 
@@ -103,7 +103,7 @@ function Projects() {
         </Reveal>
         <Row className="g-4">
           {filtered.map((project, index) => (
-            <Col md={6} lg={4} key={`${project.category}-${index}`}>
+            <Col xs={12} md={6} lg={4} key={`${project.category}-${index}`}>
               <Reveal delay={(index % 3) * 80}>
                 <article className="case-card">
                   <div className="case-card-media">
@@ -138,4 +138,4 @@ function Projects() {
   )
 }
 
-export default Projects
+export default ProjectsPage

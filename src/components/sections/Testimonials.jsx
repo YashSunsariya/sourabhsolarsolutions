@@ -2,32 +2,30 @@ import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import Reveal from '../Reveal.jsx'
 
-// NOTE: Editable placeholder testimonials. Replace with genuine
-// customer testimonials when they are available.
 const testimonials = [
   {
-    name: 'Customer Name',
-    role: 'Homeowner, Dhar',
+    name: 'Requirement Analysis',
+    role: 'Before installation',
     quote:
-      'Share a genuine customer testimonial here. Replace this placeholder with real feedback about the product quality, installation, or support.',
+      'Every solar plan starts with understanding your energy needs, site conditions, and long-term goals.',
   },
   {
-    name: 'Customer Name',
-    role: 'Business / Organization',
+    name: 'Professional Installation',
+    role: 'During execution',
     quote:
-      'Share a genuine customer testimonial here. Replace this placeholder with real feedback about the product quality, installation, or support.',
+      'Our team coordinates supply, installation, commissioning, and documentation for a clear project journey.',
   },
   {
-    name: 'Customer Name',
-    role: 'Institution / Public Project',
+    name: 'Reliable Equipment',
+    role: 'For every application',
     quote:
-      'Share a genuine customer testimonial here. Replace this placeholder with real feedback about the product quality, installation, or support.',
+      'Residential, commercial, agricultural, and institutional requirements are matched with practical solar solutions.',
   },
   {
-    name: 'Customer Name',
-    role: 'Facility / Campus',
+    name: 'Ongoing Support',
+    role: 'After commissioning',
     quote:
-      'Share a genuine customer testimonial here. Replace this placeholder with real feedback about the product quality, installation, or support.',
+      'Maintenance, net metering, subsidy guidance, and after-sales assistance remain available after handover.',
   },
 ]
 
@@ -48,10 +46,10 @@ function Testimonials() {
       <Container>
         <Reveal>
           <div className="section-head-wrap center">
-            <span className="section-eyebrow">Client Feedback</span>
-            <h2 className="section-heading">What Our Clients Say</h2>
+            <span className="section-eyebrow">Our Commitment</span>
+            <h2 className="section-heading">What You Can Expect</h2>
             <p className="section-sub">
-              Feedback from the families, businesses, and organizations we serve.
+              A clear, dependable approach to solar planning, installation, and support.
             </p>
           </div>
         </Reveal>
@@ -79,8 +77,8 @@ function Testimonials() {
             </button>
             <div className="testimonial-card">
               <span className="quote-mark" aria-hidden="true">“</span>
-              <div className="testimonial-stars" aria-label="Rated 5 out of 5 stars">
-                {'★★★★★'}
+              <div className="testimonial-stars" aria-label="Service commitment">
+                {'End-to-end support'}
               </div>
               <p className="testimonial-text">{current.quote}</p>
               <div className="testimonial-person">

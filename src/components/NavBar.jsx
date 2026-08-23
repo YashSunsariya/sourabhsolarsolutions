@@ -1,29 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Solutions', href: '#solutions' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Government Projects', href: '#government' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', to: '/', scrollTo: '#home' },
+  { label: 'About', to: '/', scrollTo: '#about' },
+  { label: 'Solutions', to: '/', scrollTo: '#solutions' },
+  { label: 'Government Projects', to: '/', scrollTo: '#government' },
+  { label: 'Projects', to: '/projects', scrollTo: '#projects' },
+  { label: 'Contact', to: '/', scrollTo: '#contact' },
 ]
 
 function NavBar() {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const [activeHref, setActiveHref] = useState('#home')
-
   const clickLockUntilRef = useRef(0)
 
-  const handleNavigation = (event, href) => {
-    event.preventDefault()
-
-    setExpanded(false)
-    setActiveHref(href)
-
-    const target = document.querySelector(href)
+  const scrollToSection = (scrollTo) => {
+    const target = document.querySelector(scrollTo)
 
     if (!target) return
 
@@ -35,15 +32,8 @@ function NavBar() {
     const targetPosition =
       target.getBoundingClientRect().top +
       window.scrollY -
-      navHeight
-
-    const travelDistance = Math.abs(window.scrollY - targetPosition)
-    const clickLockDuration = Math.min(
-      2200,
-      Math.max(900, travelDistance / 8),
-    )
-
-    clickLockUntilRef.current = Date.now() + clickLockDuration
+      navHeight -
+      (window.innerWidth <= 991.98 ? 0 : 30)
 
     window.scrollTo({
       top: Math.max(0, targetPosition),
@@ -51,8 +41,31 @@ function NavBar() {
     })
   }
 
+  const handleNavigation = (event, scrollTo, to = '/') => {
+    event.preventDefault()
+
+    setExpanded(false)
+    setActiveHref(scrollTo || '#projects')
+    clickLockUntilRef.current = Date.now() + 650
+
+    if (to !== '/' && location.pathname === '/') {
+      navigate(to)
+      return
+    }
+
+    if (location.pathname !== '/') {
+      navigate('/')
+      window.setTimeout(() => scrollToSection(scrollTo), 0)
+      return
+    }
+
+    scrollToSection(scrollTo)
+  }
+
   // Navbar scroll state
   useEffect(() => {
+    if (location.pathname !== '/') return undefined
+
     const onScroll = () => {
       setScrolled(window.scrollY > 24)
     }
@@ -66,12 +79,13 @@ function NavBar() {
     return () => {
       window.removeEventListener('scroll', onScroll)
     }
-  }, [])
+  }, [location.pathname])
 
-  // Active navbar item while scrolling
+  // Active navbar item while scrolling (only for same-page sections)
   useEffect(() => {
-    const sections = navLinks
-      .map((link) => document.querySelector(link.href))
+    const sectionLinks = navLinks.filter(l => l.scrollTo)
+    const sections = sectionLinks
+      .map((link) => document.querySelector(link.scrollTo))
       .filter(Boolean)
 
     if (!sections.length) return
@@ -96,7 +110,7 @@ function NavBar() {
 
       // Top of page
       if (window.scrollY <= 5) {
-        return '#home'
+        return sectionLinks[0].scrollTo
       }
 
       // Bottom of page
@@ -121,20 +135,15 @@ function NavBar() {
 
     const updateActiveSection = () => {
       if (Date.now() < clickLockUntilRef.current) {
-        window.setTimeout(() => {
-          handleScroll()
-        }, clickLockUntilRef.current - Date.now())
         ticking = false
         return
       }
 
       const newActiveHref = resolveActiveSection()
 
-      setActiveHref((current) =>
-        current === newActiveHref
-          ? current
-          : newActiveHref
-      )
+      setActiveHref((current) => (
+        current === newActiveHref ? current : newActiveHref
+      ))
 
       ticking = false
     }
@@ -154,7 +163,7 @@ function NavBar() {
     }
 
     // Initial active state
-    setActiveHref(resolveActiveSection())
+    updateActiveSection()
 
     window.addEventListener(
       'scroll',
@@ -192,11 +201,13 @@ function NavBar() {
       expanded={expanded}
     >
       <Container>
-        <Navbar.Brand
-          href="#home"
+        <a
+          href="/"
+          className="navbar-brand"
           onClick={(event) =>
             handleNavigation(event, '#home')
           }
+          end
         >
           <span className="brand-mark">
             <svg
@@ -224,7 +235,7 @@ function NavBar() {
             Sourabh{' '}
             <span>Solar Solutions</span>
           </span>
-        </Navbar.Brand>
+        </a>
 
         <Navbar.Toggle
           aria-controls="solar-nav"
@@ -250,34 +261,25 @@ function NavBar() {
         <Navbar.Collapse id="solar-nav">
           <Nav className="ms-auto align-items-lg-center">
             {navLinks.map((link) => (
-              <Nav.Link
-                key={link.href}
-                href={link.href}
-                active={false}
-                className={
-                  activeHref === link.href
-                    ? 'active'
-                    : ''
-                }
-                onClick={(event) =>
-                  handleNavigation(
-                    event,
-                    link.href
-                  )
-                }
+              <a
+                key={link.to}
+                href={link.to}
+                className={`nav-link ${
+                  link.to === '/projects'
+                    ? location.pathname === '/projects' || (location.pathname === '/' && activeHref === link.scrollTo) ? 'active' : ''
+                    : location.pathname === '/' && activeHref === link.scrollTo ? 'active' : ''
+                }`}
+                  onClick={(event) => handleNavigation(event, link.scrollTo, link.to)}
               >
                 {link.label}
-              </Nav.Link>
+              </a>
             ))}
 
             <a
-              href="#contact"
+              href="/"
               className="nav-cta ms-lg-3"
               onClick={(event) =>
-                handleNavigation(
-                  event,
-                  '#contact'
-                )
+                handleNavigation(event, '#contact')
               }
             >
               Get a Quote

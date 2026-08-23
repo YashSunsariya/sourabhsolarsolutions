@@ -60,7 +60,11 @@
 }
 
 .navbar-solar .nav-link:hover,
-.navbar-solar .nav-link:focus,
+.navbar-solar .nav-link:focus-visible {
+  color: var(--green-600);
+  background: var(--green-100);
+}
+
 .navbar-solar .nav-link.active {
   color: var(--green-600);
   background: var(--green-100);
@@ -1188,14 +1192,6 @@
 
 .case-link:hover svg {
   transform: translateX(4px);
-}
-
-/* placeholder badge for editable projects */
-.project-placeholder-note {
-  font-size: 0.85rem;
-  color: var(--ink-400);
-  text-align: center;
-  margin-top: 28px;
 }
 
 /* ---------- Process ---------- */
@@ -2454,9 +2450,6 @@
     padding: 8px 12px;
   }
 
-  .project-placeholder-note {
-    margin-top: 16px;
-  }
 
   /* --- How We Work: compact horizontal timeline --- */
   .process-grid {

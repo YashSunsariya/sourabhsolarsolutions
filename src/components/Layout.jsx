@@ -1,42 +1,11 @@
-import NavBar from '../NavBar.jsx'
-import Footer from '../Footer.jsx'
-import Hero from '../sections/Hero.jsx'
-import Stats from '../sections/Stats.jsx'
-import About from '../sections/About.jsx'
-import Solutions from '../sections/Solutions.jsx'
-import SupplyExecute from '../sections/SupplyExecute.jsx'
-import Government from '../sections/Government.jsx'
-import WhyChoose from '../sections/WhyChoose.jsx'
-import FeaturedProjects from '../sections/FeaturedProjects.jsx'
-import Process from '../sections/Process.jsx'
-import Products from '../sections/Products.jsx'
-import Trust from '../sections/Trust.jsx'
-import Testimonials from '../sections/Testimonials.jsx'
-import Faq from '../sections/Faq.jsx'
-import FinalCta from '../sections/FinalCta.jsx'
-import Contact from '../sections/Contact.jsx'
+import NavBar from './NavBar.jsx'
+import Footer from './Footer.jsx'
 
-function Home() {
+function Layout({ children }) {
   return (
     <>
       <NavBar />
-      <main>
-        <Hero />
-        <Stats />
-        <About />
-        <Solutions />
-        <SupplyExecute />
-        <Government />
-        <WhyChoose />
-        <FeaturedProjects />
-        <Process />
-        <Products />
-        <Trust />
-        <Testimonials />
-        <Faq />
-        <FinalCta />
-        <Contact />
-      </main>
+      <main>{children}</main>
       <Footer />
       <a
         href="https://wa.me/917697155558"
@@ -72,4 +41,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Layout

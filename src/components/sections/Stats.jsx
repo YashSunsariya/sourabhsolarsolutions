@@ -1,28 +1,26 @@
 import { Col, Container, Row } from 'react-bootstrap'
 import Reveal from '../Reveal.jsx'
 
-// NOTE: Editable placeholders. Replace `value` with the actual figures
-// (e.g. "250+", "12", "40", "15+") as soon as real data is available.
 const stats = [
   {
-    value: '—',
-    label: 'Projects Completed',
-    hint: 'Add actual figure',
+    value: '2023',
+    label: 'Founded',
+    hint: 'Serving with purpose',
   },
   {
-    value: '—',
-    label: 'MW Installed',
-    hint: 'Add actual figure',
+    value: 'MP',
+    label: 'Primary Service Area',
+    hint: 'Dhar and nearby regions',
   },
   {
-    value: '—',
-    label: 'Cities Served',
-    hint: 'Add actual figure',
+    value: 'EPC',
+    label: 'Delivery Model',
+    hint: 'From design to commissioning',
   },
   {
-    value: '—',
-    label: 'Years of Experience',
-    hint: 'Add actual figure',
+    value: 'AMC',
+    label: 'After-Sales Support',
+    hint: 'Maintenance and assistance',
   },
 ]
 
