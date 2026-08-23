@@ -1,0 +1,314 @@
+:root {
+  --green-950: #061f13;
+  --green-900: #0b2f1d;
+  --green-800: #10401f;
+  --green-700: #15592f;
+  --green-600: #1e7b3c;
+  --green-500: #2b9d4f;
+  --green-100: #e7f4ea;
+  --amber-500: #f9a825;
+  --amber-400: #ffb92d;
+  --amber-100: #fdf3dd;
+  --ink-900: #14211a;
+  --ink-600: #4b5c51;
+  --ink-400: #8a998e;
+  --neutral-100: #f6f9f6;
+  --neutral-200: #eef3ee;
+  --white: #ffffff;
+  --shadow-sm: 0 2px 10px rgba(11, 47, 29, 0.06);
+  --shadow-md: 0 10px 30px rgba(11, 47, 29, 0.1);
+  --shadow-lg: 0 24px 60px rgba(11, 47, 29, 0.16);
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --font-display: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink-900);
+  background: var(--white);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  color: var(--green-900);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--green-600);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+section {
+  position: relative;
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- Shared helpers ---------- */
+.section-pad {
+  padding: 96px 0;
+}
+
+@media (max-width: 767.98px) {
+  .section-pad {
+    padding: 64px 0;
+  }
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--green-600);
+}
+
+.section-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: var(--amber-500);
+  border-radius: 2px;
+}
+
+.section-heading {
+  font-size: clamp(1.75rem, 3.6vw, 2.6rem);
+  font-weight: 800;
+  margin: 12px 0 16px;
+}
+
+.section-sub {
+  color: var(--ink-600);
+  font-size: 1.05rem;
+  max-width: 640px;
+}
+
+.section-head-wrap {
+  max-width: 760px;
+}
+
+.section-head-wrap.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-head-wrap.center .section-eyebrow {
+  justify-content: center;
+}
+
+.section-head-wrap.center .section-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------- Buttons ---------- */
+.btn-solar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: 50rem;
+  padding: 14px 28px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  background: var(--amber-500);
+  color: var(--green-950);
+  box-shadow: 0 10px 24px rgba(249, 168, 37, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-solar:hover,
+.btn-solar:focus-visible {
+  background: var(--amber-400);
+  color: var(--green-950);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(249, 168, 37, 0.4);
+}
+
+.btn-solar:focus-visible {
+  outline: 3px solid var(--amber-500);
+  outline-offset: 2px;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50rem;
+  padding: 13px 28px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  background: transparent;
+  color: #ffffff;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  border-color: var(--amber-500);
+  color: var(--amber-400);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-outline-green {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 2px solid var(--green-600);
+  border-radius: 50rem;
+  padding: 13px 28px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  background: transparent;
+  color: var(--green-600);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-outline-green:hover,
+.btn-outline-green:focus-visible {
+  background: var(--green-600);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-green {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: 50rem;
+  padding: 14px 28px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  background: var(--green-600);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(30, 123, 60, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-green:hover,
+.btn-green:focus-visible {
+  background: var(--green-700);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(30, 123, 60, 0.35);
+}
+
+/* ---------- Cards ---------- */
+.card-surface {
+  background: #ffffff;
+  border: 1px solid rgba(11, 47, 29, 0.06);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Form ---------- */
+.form-control-solar,
+.form-select-solar {
+  width: 100%;
+  border: 1.5px solid #dde6df;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink-900);
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control-solar:focus,
+.form-select-solar:focus {
+  outline: none;
+  border-color: var(--green-600);
+  box-shadow: 0 0 0 4px rgba(30, 123, 60, 0.12);
+}
+
+.form-control-solar::placeholder {
+  color: var(--ink-400);
+}
+
+.form-label-solar {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-900);
+  margin-bottom: 6px;
+  display: block;
+}

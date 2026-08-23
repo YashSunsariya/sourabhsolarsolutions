@@ -1,57 +1,109 @@
-import { Col, Container, Row } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { Container } from 'react-bootstrap'
+import Reveal from '../Reveal.jsx'
 
+// NOTE: Editable placeholder testimonials. Replace with genuine
+// customer testimonials when they are available.
 const testimonials = [
   {
-    name: 'Ramesh Patil',
-    role: 'Homeowner, Nashik',
+    name: 'Customer Name',
+    role: 'Homeowner, Dhar',
     quote:
-      'Electricity bill dropped from ₹4,500 to under ₹400 a month. The team handled everything — subsidy, net meter, installation. Highly recommended!',
+      'Share a genuine customer testimonial here. Replace this placeholder with real feedback about the product quality, installation, or support.',
   },
   {
-    name: 'Priya Deshmukh',
-    role: 'Business Owner',
+    name: 'Customer Name',
+    role: 'Business / Organization',
     quote:
-      'Professional and punctual. Their commercial rooftop plant runs flawlessly and the payback has been even faster than promised.',
+      'Share a genuine customer testimonial here. Replace this placeholder with real feedback about the product quality, installation, or support.',
   },
   {
-    name: 'Suresh Jadhav',
-    role: 'Farmer',
+    name: 'Customer Name',
+    role: 'Institution / Public Project',
     quote:
-      'Installed a solar water pump for our farm. Water flows through the day with zero diesel cost. Truly life-changing service.',
+      'Share a genuine customer testimonial here. Replace this placeholder with real feedback about the product quality, installation, or support.',
+  },
+  {
+    name: 'Customer Name',
+    role: 'Facility / Campus',
+    quote:
+      'Share a genuine customer testimonial here. Replace this placeholder with real feedback about the product quality, installation, or support.',
   },
 ]
 
 function Testimonials() {
+  const [active, setActive] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((current) => (current + 1) % testimonials.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const current = testimonials[active]
+
   return (
-    <section id="testimonials" className="testimonials-section py-5">
+    <section id="testimonials" className="testimonials-section section-pad">
       <Container>
-        <div className="text-center mb-5">
-          <p className="section-eyebrow text-warning fw-semibold mb-2">
-            What Our Clients Say
-          </p>
-          <h2 className="fw-bold mb-3">Trusted by Families & Businesses</h2>
-        </div>
-        <Row className="g-4">
-          {testimonials.map((testimonial) => (
-            <Col md={4} key={testimonial.name}>
-              <div className="testimonial-card bg-white rounded-4 p-4 h-100 shadow-sm">
-                <div className="text-warning fs-4 mb-2" aria-hidden="true">
-                  {'★★★★★'}
-                </div>
-                <p className="mb-3">{testimonial.quote}</p>
-                <div className="d-flex align-items-center gap-3">
-                  <div className="avatar-circle d-flex align-items-center justify-content-center fw-bold">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="fw-bold">{testimonial.name}</div>
-                    <small className="text-muted">{testimonial.role}</small>
-                  </div>
+        <Reveal>
+          <div className="section-head-wrap center">
+            <span className="section-eyebrow">Client Feedback</span>
+            <h2 className="section-heading">What Our Clients Say</h2>
+            <p className="section-sub">
+              Feedback from the families, businesses, and organizations we serve.
+            </p>
+          </div>
+        </Reveal>
+        <Reveal delay={120}>
+          <div className="testimonial-wrap" style={{ position: 'relative', maxWidth: '860px', margin: '0 auto' }}>
+            <button
+              type="button"
+              className="testimonial-prev"
+              aria-label="Previous testimonial"
+              onClick={() => setActive((active - 1 + testimonials.length) % testimonials.length)}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M19 12H5M11 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="testimonial-next"
+              aria-label="Next testimonial"
+              onClick={() => setActive((active + 1) % testimonials.length)}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </button>
+            <div className="testimonial-card">
+              <span className="quote-mark" aria-hidden="true">“</span>
+              <div className="testimonial-stars" aria-label="Rated 5 out of 5 stars">
+                {'★★★★★'}
+              </div>
+              <p className="testimonial-text">{current.quote}</p>
+              <div className="testimonial-person">
+                <span className="testimonial-avatar">{current.name.charAt(0)}</span>
+                <div>
+                  <h6>{current.name}</h6>
+                  <p>{current.role}</p>
                 </div>
               </div>
-            </Col>
+            </div>
+          </div>
+        </Reveal>
+        <div className="testimonial-dots">
+          {testimonials.map((testimonial, index) => (
+            <button
+              key={`${testimonial.name}-${index}`}
+              type="button"
+              className={`testimonial-dot ${index === active ? 'active' : ''}`}
+              aria-label={`Go to testimonial ${index + 1}`}
+              onClick={() => setActive(index)}
+            />
           ))}
-        </Row>
+        </div>
       </Container>
     </section>
   )
